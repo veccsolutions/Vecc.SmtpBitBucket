@@ -1,0 +1,11 @@
+﻿CREATE TABLE IF NOT EXISTS "Identity"."UserLogins"
+(
+	"LoginProvider" VARCHAR(128) NOT NULL,
+	"ProviderKey" VARCHAR(128) NOT NULL,
+	"ProviderDisplayName" TEXT NULL,
+	"UserId" INT NOT NULL
+);
+
+ALTER TABLE "Identity"."UserLogins" ADD CONSTRAINT "PK_UserLogins" PRIMARY KEY ("LoginProvider", "ProviderKey");
+
+CREATE INDEX IF NOT EXISTS "IX_UserLogins_UserId" ON "Identity"."UserLogins" ("UserId" ASC);

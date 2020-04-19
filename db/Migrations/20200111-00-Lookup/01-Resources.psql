@@ -1,0 +1,8 @@
+﻿CREATE TABLE IF NOT EXISTS "Lookup"."ResourceTypes"
+(
+    "Id" SERIAL,
+    "StringId" INT,
+
+    CONSTRAINT "PK_ResourceTypes" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_StringId" FOREIGN KEY ("StringId") REFERENCES "Lookup"."Strings"("Id")
+);

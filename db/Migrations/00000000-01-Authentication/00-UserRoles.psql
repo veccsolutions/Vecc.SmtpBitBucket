@@ -1,0 +1,8 @@
+﻿CREATE TABLE IF NOT EXISTS "Identity"."UserRoles"(
+	"UserId" INT NOT NULL,
+	"RoleId" INT NOT NULL
+);
+
+ALTER TABLE "Identity"."UserRoles" ADD CONSTRAINT "PK_UserRoles" PRIMARY KEY ("UserId", "RoleId");
+
+CREATE INDEX IF NOT EXISTS "IX_UserRoles_RoleId" ON "Identity"."UserRoles" ("RoleId" ASC);

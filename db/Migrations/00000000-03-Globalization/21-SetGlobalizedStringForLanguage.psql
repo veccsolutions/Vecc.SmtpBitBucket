@@ -1,0 +1,24 @@
+CREATE OR REPLACE PROCEDURE "Lookup"."SetGlobalizedStringForLanguage"
+(
+    stringSlug VARCHAR(500),
+    languageSlug VARCHAR(2),
+    text VARCHAR(500)
+)
+LANGUAGE PLPGSQL
+AS
+$$
+DECLARE
+    stringId INT := 0;
+    languageId INT := 0;
+BEGIN
+    SELECT stringId = "Lookup"."GetStringIdForSlug" (stringSlug);
+    -- SELECT languageId = "Lookup"."GetLanguageIdForSlug" (languageSlug);
+
+    -- INSERT INTO "Lookup"."GlobalizedStrings"
+    --     ("StringId", "LanguageId", "Text")
+    -- VALUES
+    --     (stringId, languageId, text)
+    -- ON CONFLICT ON CONSTRAINT "PK_GlobalizedStrings"
+    -- DO UPDATE SET "Text" = text;
+END;
+$$;

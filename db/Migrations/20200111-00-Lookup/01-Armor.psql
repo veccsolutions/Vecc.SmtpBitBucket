@@ -1,0 +1,19 @@
+﻿CREATE TABLE IF NOT EXISTS "Lookup"."ArmorTypes"
+(
+    "Id" SERIAL,
+    "StringId" INT,
+
+    CONSTRAINT "PK_ArmorTypes" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_StringId" FOREIGN KEY ("StringId") REFERENCES "Lookup"."Strings"("Id")
+);
+
+CREATE OR REPLACE PROCEDURE "Lookup"."GetArmorTypes" ()
+LANGUAGE PLPGSQL
+AS
+$$
+BEGIN
+    SELECT "Id",
+            "StringId"
+    FROM "Lookup"."ArmorTypes";
+END;
+$$;

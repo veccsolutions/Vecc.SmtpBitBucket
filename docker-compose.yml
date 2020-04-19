@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  sql:
+    image: postgres:12.2
+    environment:
+      - POSTGRES_PASSWORD=Abcd1234
+    ports:
+      - "6101:5432"
+  migrator:
+    image: registry.veccsolutions.com/databasemigrator:1.4
+    volumes:
+      - ./db/Migrations/Postgres:/migrations
+    depends_on:
+      - sql
+    environment:
+      - ConnectionString=Host=sql;Username=postgres;Password=Abcd1234;Database=SmtpBitBucket;
+      - CreateDatabase=true
+      - DatabaseType=PostgreSQL
+      - JournalTableSchema=public
+      - IncludeTestData=true

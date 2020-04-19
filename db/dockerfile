@@ -1,0 +1,9 @@
+FROM docker.veccsolutions.org:5000/templex/databasemigrator:latest
+
+COPY entrypoint.sh /app
+COPY Migrations /migrations
+
+ENV ScriptSourceDirectory=/migrations
+ENV ScriptSourceDirectoryRecurse=true
+
+ENTRYPOINT [ "./entrypoint.sh" ]

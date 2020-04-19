@@ -1,0 +1,6 @@
+﻿ALTER TABLE "Identity"."RoleClaims" ADD CONSTRAINT "FK_RoleClaims_Roles_RoleId" FOREIGN KEY("RoleId") REFERENCES "Identity"."Roles" ("Id") ON DELETE CASCADE;
+ALTER TABLE "Identity"."UserClaims" ADD CONSTRAINT "FK_UserClaims_Users_UserId" FOREIGN KEY("UserId") REFERENCES "Identity"."Users" ("Id") ON DELETE CASCADE;
+ALTER TABLE "Identity"."UserLogins" ADD CONSTRAINT "FK_UserLogins_Users_UserId" FOREIGN KEY("UserId") REFERENCES "Identity"."Users" ("Id") ON DELETE CASCADE;
+ALTER TABLE "Identity"."UserRoles" ADD CONSTRAINT "FK_UserRoles_Roles_RoleId" FOREIGN KEY("RoleId") REFERENCES "Identity"."Roles" ("Id") ON DELETE CASCADE;
+ALTER TABLE "Identity"."UserRoles" ADD CONSTRAINT "FK_UserRoles_Users_UserId" FOREIGN KEY("UserId") REFERENCES "Identity"."Users" ("Id") ON DELETE CASCADE;
+ALTER TABLE "Identity"."UserTokens" ADD CONSTRAINT "FK_UserTokens_Users_UserId" FOREIGN KEY("UserId") REFERENCES "Identity"."Users" ("Id") ON DELETE CASCADE;

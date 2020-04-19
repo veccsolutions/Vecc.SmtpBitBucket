@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS "Lookup"."Strings"
+(
+    "Id" SERIAL,
+    "Slug" VARCHAR(500) CONSTRAINT "c_slug" UNIQUE,
+
+    CONSTRAINT "PK_Strings" PRIMARY KEY ("Id")
+);
+
+CREATE INDEX IF NOT EXISTS "IX_Slug" ON "Lookup"."Strings" ("Slug" ASC);

@@ -1,0 +1,6 @@
+﻿
+SELECT FROM "Lookup"."GetStringIdForSlug" ('Hello');
+SELECT FROM "Lookup"."GetStringIdForSlug" ('Hello');
+SELECT FROM "Lookup"."GetStringIdForSlug" ('Hello123');
+
+-- CALL "Lookup"."SetGlobalizedStringForLanguage" ('Test', 'en', 'Test');

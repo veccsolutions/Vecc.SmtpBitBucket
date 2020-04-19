@@ -1,0 +1,8 @@
+﻿CREATE TABLE IF NOT EXISTS "Identity"."Users"(
+	"Id" SERIAL NOT NULL,
+	"Email" VARCHAR(256) NULL,
+
+    CONSTRAINT "PK_Users" PRIMARY KEY ("Id")
+);
+
+CREATE INDEX IF NOT EXISTS "EmailIndex" ON "Identity"."Users"("Email" ASC);

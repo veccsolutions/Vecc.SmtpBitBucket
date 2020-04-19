@@ -1,0 +1,8 @@
+﻿CREATE TABLE IF NOT EXISTS "public"."Rules"
+(
+	"Id" SERIAL,
+	"RuleType" VARCHAR(128) NOT NULL,
+	"RuleConfiguration" TEXT NOT NULL
+
+    CONSTRAINT "PK_Rule" PRIMARY KEY ("Id")
+);
