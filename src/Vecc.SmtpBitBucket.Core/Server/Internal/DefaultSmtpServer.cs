@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -118,7 +119,7 @@ namespace Vecc.SmtpBitBucket.Core.Server.Internal
                     case "QUIT":
                         this.Logger.LogInformation("QUIT command received.");
                         await this.SendAsync(QuitGoodbye);
-                        this.TerminateAsync();
+                        await this.TerminateAsync();
                         break;
                     case "HELP":
                     case "TURN":
@@ -426,8 +427,20 @@ namespace Vecc.SmtpBitBucket.Core.Server.Internal
             if (line == ".")
             {
                 this._inData = false;
+                //parse the message here
+                var bytes = Encoding.UTF8.GetBytes(string.Join("\r\n", this._session.Data));
+                using (var stream = new MemoryStream(bytes))
+                {
+                    var x = new MimeKit.MimeParser(stream);
+                    var headers = await x.ParseHeadersAsync();
+                    var subject = headers[MimeKit.HeaderId.Subject];
+                    this.Logger.LogInformation("Message received: From={from} To={to} Subject={subject}", this._session.MailFrom, string.Join(",", this._session.Recipients), subject);
+                    this._session.Subject = subject ?? string.Empty;
+                }
+
                 await this.SendAsync(GeneralOk);
                 this.Logger.LogInformation("Message received!");
+
                 await this._serviceStore.StoreMessageAsync(this._session);
             }
             else

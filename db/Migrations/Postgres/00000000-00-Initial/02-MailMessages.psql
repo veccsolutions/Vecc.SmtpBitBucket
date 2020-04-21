@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS "public"."MailMessages"
+(
+	"Id" SERIAL,
+	"SessionId" INT,
+	"ClientEhlo" VARCHAR(256),
+	"MailFrom" VARCHAR(256),
+	"MailTo" VARCHAR(256),
+	"Subject" VARCHAR(256),
+	"ReceivedAt" TIME,
+	"Username" VARCHAR(256),
+	"Data" TEXT,
+
+    CONSTRAINT "PK_MailMessages" PRIMARY KEY ("Id")
+);

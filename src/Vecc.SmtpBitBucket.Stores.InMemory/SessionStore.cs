@@ -19,7 +19,7 @@ namespace Vecc.SmtpBitBucket.Stores.InMemory
             this._dateTimeProvider = dateTimeProvider;
         }
 
-        public Task AddChatterAsync(Guid sessionId, string message, Direction direction)
+        public Task AddChatterAsync(int sessionId, string message, Direction direction)
         {
             this._chatter.Add(new Chatter
             {
@@ -35,9 +35,9 @@ namespace Vecc.SmtpBitBucket.Stores.InMemory
             return Task.CompletedTask;
         }
 
-        public Task<SmtpSession> GetSessionByIdAsync(Guid id) => Task.FromResult(this._sessions.FirstOrDefault(x => x.SessionId == id));
+        public Task<SmtpSession> GetSessionByIdAsync(int id) => Task.FromResult(this._sessions.FirstOrDefault(x => x.SessionId == id));
 
-        public Task<SmtpSessionChatter[]> GetSessionChatterAsync(Guid sessionId) => Task.FromResult(this._chatter.Where(x => x.SessionId == sessionId).Select(x => x.Data).ToArray());
+        public Task<SmtpSessionChatter[]> GetSessionChatterAsync(int sessionId) => Task.FromResult(this._chatter.Where(x => x.SessionId == sessionId).Select(x => x.Data).ToArray());
 
         public Task<SmtpSession[]> GetSessionsAsync(DateTime? oldestDate = null, DateTime? newestDate = null, string username = null) => Task.FromResult(this._sessions.Where(x =>
                 (x.SessionStartTime >= (oldestDate ?? DateTime.MinValue)) &&
@@ -45,14 +45,23 @@ namespace Vecc.SmtpBitBucket.Stores.InMemory
                 (string.IsNullOrWhiteSpace(username) || x.Username == username))
             .ToArray());
 
-        public Task StoreSessionAsync(SmtpSession session)
+        public Task<SmtpSession> StoreSessionAsync(SmtpSession session)
         {
+            var sessionId = 1;
+
+            if (this._sessions.Count > 0)
+            {
+                sessionId = this._sessions.Max(x => x.SessionId) + 1;
+            }
+
+            session.SessionId = sessionId;
+
             this._sessions.Add(session);
 
-            return Task.CompletedTask;
+            return Task.FromResult(session);
         }
 
-        public async Task UpdateSessionEndTime(Guid sessionId, DateTime endTime)
+        public async Task UpdateSessionEndTime(int sessionId, DateTime endTime)
         {
             var session = await this.GetSessionByIdAsync(sessionId);
             if (session != null)
@@ -61,7 +70,7 @@ namespace Vecc.SmtpBitBucket.Stores.InMemory
             }
         }
 
-        public async Task UpdateSessionUsername(Guid sessionId, string username)
+        public async Task UpdateSessionUsername(int sessionId, string username)
         {
             var session = await this.GetSessionByIdAsync(sessionId);
             if (session != null)

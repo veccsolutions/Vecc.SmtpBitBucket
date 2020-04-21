@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Vecc.SmtpBitBucket.Stores.Postgres\Vecc.SmtpBitBucket.Stores.Postgres.csproj" />
+  </ItemGroup>
+
 
 
 </Project>

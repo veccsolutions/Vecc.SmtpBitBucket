@@ -9,11 +9,12 @@ namespace Vecc.SmtpBitBucket.Core.Server
         public bool UseUtf8 { get; set; }
         public ICollection<string> Recipients { get; set; }
         public ICollection<string> Data { get; set; }
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string MailFrom { get; set; }
         public string RemoteIp { get; set; }
         public bool IsAuthenticated { get; set; }
         public string Username { get; set; }
+        public string Subject { get; internal set; }
 
         public SmtpConnection()
         {

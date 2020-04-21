@@ -1,0 +1,9 @@
+﻿CREATE TABLE IF NOT EXISTS "public"."SmtpUsers"
+(
+	"Id" SERIAL,
+	"Username" VARCHAR(32),
+	"Password" VARCHAR(100),
+	"Enabled" BIT,
+
+    CONSTRAINT "PK_SmtpUsers" PRIMARY KEY ("Id")
+);

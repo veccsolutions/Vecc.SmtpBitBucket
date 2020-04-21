@@ -42,7 +42,6 @@ namespace Vecc.SmtpBitBucket.Core.Server.Internal
                 this._tcpClient = tcpClient;
                 this._networkStream = this._tcpClient.GetStream();
                 this._readTask = this.ReadAsync();
-                //this._networkStream.BeginRead(buffer, 0, 1024, this.Read, buffer);
 
                 await this.StartAsync();
             }
@@ -62,9 +61,8 @@ namespace Vecc.SmtpBitBucket.Core.Server.Internal
                 var buffer = new byte[1024];
                 var stringBuffer = string.Empty;
 
-                while ((bytesRead = (await this._networkStream.ReadAsync(buffer, 0, 1024, this._hangupToken))) > 0)
+                while ((bytesRead = await this.WaitForBytesAsync(buffer))> 0)
                 {
-
                     stringBuffer += Encoding.Default.GetString(buffer, 0, bytesRead);
 
                     var linePointer = -1;
@@ -132,6 +130,26 @@ namespace Vecc.SmtpBitBucket.Core.Server.Internal
             this.Terminated = true;
 
             return Task.CompletedTask;
+        }
+
+        private async Task<int> WaitForBytesAsync(byte[] buffer)
+        {
+            try
+            {
+                var result = await this._networkStream.ReadAsync(buffer, 0, buffer.Length, this._hangupToken);
+                return result;
+            }
+            catch (NullReferenceException)
+            {
+                //this is expected when we terminate the connection.
+                return 0;
+            }
+            catch (Exception exception)
+            {
+                this.Logger.LogError(exception, "Unexpected error waiting for bytes");
+                throw;
+            }
+
         }
     }
 }

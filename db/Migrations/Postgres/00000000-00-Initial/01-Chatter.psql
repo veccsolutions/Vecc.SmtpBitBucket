@@ -1,0 +1,10 @@
+﻿CREATE TABLE IF NOT EXISTS "public"."Chatter"
+(
+	"Id" SERIAL,
+	"SessionId" INT,
+	"Direction" VARCHAR(10),
+	"Timestamp" TIME,
+	"Data" TEXT,
+
+    CONSTRAINT "PK_Chatter" PRIMARY KEY ("Id")
+);

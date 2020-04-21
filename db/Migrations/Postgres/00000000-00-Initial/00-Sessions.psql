@@ -1,0 +1,10 @@
+﻿CREATE TABLE IF NOT EXISTS "public"."Sessions"
+(
+	"Id" SERIAL,
+	"SessionStartTime" TIME NOT NULL,
+	"SessionEndTime" TIME NULL,
+	"RemoteIP" VARCHAR(32),
+	"Username" VARCHAR(256),
+
+    CONSTRAINT "PK_Sessions" PRIMARY KEY ("Id")
+);

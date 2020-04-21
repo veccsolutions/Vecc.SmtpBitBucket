@@ -15,42 +15,44 @@ namespace Vecc.SmtpBitBucket.Core.Server.Internal
         //private readonly IMessageNotifier _messageNotifier;
         private readonly IMessageStore _messageStore;
         private readonly ISessionStore _sessionStore;
-        private readonly ISmtpConnectionFactory _smtpConnectionFactory;
 
         public ServiceStore(
             IDateTimeProvider dateTimeProvider,
             ILogger<ServiceStore> logger,
             //IMessageNotifier messageNotifier,
             IMessageStore messageStore,
-            ISessionStore sessionStore,
-            ISmtpConnectionFactory smtpConnectionFactory)
+            ISessionStore sessionStore)
         {
             this._dateTimeProvider = dateTimeProvider;
             this._logger = logger;
             //this._messageNotifier = messageNotifier;
             this._messageStore = messageStore;
             this._sessionStore = sessionStore;
-            this._smtpConnectionFactory = smtpConnectionFactory;
         }
 
         internal async Task<SmtpConnection> CreateNewSessionAsync(string remoteIp)
         {
-            var smtpSession = await this._smtpConnectionFactory.CreateSmtpConnectionAsync();
+            var smtpSession = new SmtpConnection
+            {
+                EhloHost = string.Empty,
+                MailFrom = string.Empty,
+            };
 
-            await this._sessionStore.StoreSessionAsync(new SmtpSession
+            var session = await this._sessionStore.StoreSessionAsync(new SmtpSession
             {
                 RemoteIp = remoteIp,
-                SessionId = smtpSession.Id,
                 SessionStartTime = this._dateTimeProvider.UtcNow,
                 SessionEndTime = null
             });
+
+            smtpSession.Id = session.SessionId;
 
             return smtpSession;
         }
 
         internal Task UpdateSessionUsernameAsync(SmtpConnection session) => this._sessionStore.UpdateSessionUsername(session.Id, session.Username);
 
-        internal Task StoreChatterAsync(string message, Direction direction, Guid sessionId) => this._sessionStore.AddChatterAsync(sessionId, message, this.ToCore(direction));
+        internal Task StoreChatterAsync(string message, Direction direction, int sessionId) => this._sessionStore.AddChatterAsync(sessionId, message, this.ToCore(direction));
 
         private Core.Direction ToCore(Direction service)
         {
@@ -74,6 +76,7 @@ namespace Vecc.SmtpBitBucket.Core.Server.Internal
                 MailFrom = session.MailFrom,
                 Receipients = session.Recipients.ToArray(),
                 SessionId = session.Id,
+                Subject = session.Subject,
                 Timestamp = DateTime.UtcNow,
                 Username = session.Username,
                 UseUtf8 = session.UseUtf8

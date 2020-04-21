@@ -1,8 +1,0 @@
-﻿CREATE TABLE IF NOT EXISTS "Identity"."UserTokens"(
-	"UserId" INT NOT NULL,
-	"LoginProvider" VARCHAR(128) NOT NULL,
-	"Name" VARCHAR(128) NOT NULL,
-	"Value" TEXT NULL
-);
-
-ALTER TABLE "Identity"."UserTokens" ADD CONSTRAINT "PK_AspNetUserTokens" PRIMARY KEY ("UserId", "LoginProvider", "Name");

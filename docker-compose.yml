@@ -18,3 +18,10 @@ services:
       - DatabaseType=PostgreSQL
       - JournalTableSchema=public
       - IncludeTestData=true
+  pgadmin:
+    image: dpage/pgadmin4
+    environment: 
+      - PGADMIN_DEFAULT_EMAIL=edward@frakkingsweet.com
+      - PGADMIN_DEFAULT_PASSWORD=abcd1234
+    ports:
+      - "6102:80"

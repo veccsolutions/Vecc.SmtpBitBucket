@@ -10,7 +10,6 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddCoreBitBucket(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IDateTimeProvider, DefaultDateTimeProvider>();
-            serviceCollection.AddSingleton<ISmtpConnectionFactory, DefaultSmtpConnectionFactory>();
             serviceCollection.AddSingleton<ISmtpServerFactory, DefaultSmtpServerFactory>();
             serviceCollection.AddSingleton<ISmtpHost, DefaultSmtpHost>();
             serviceCollection.AddSingleton<ServiceStore, ServiceStore>();

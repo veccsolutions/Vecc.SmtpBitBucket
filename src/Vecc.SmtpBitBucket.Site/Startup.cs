@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +10,7 @@ namespace Vecc.SmtpBitBucket.Site
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -23,6 +19,9 @@ namespace Vecc.SmtpBitBucket.Site
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddPostgresStores(this.Configuration.GetSection("DatabaseOptions"));
+            services.AddCoreBitBucket();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

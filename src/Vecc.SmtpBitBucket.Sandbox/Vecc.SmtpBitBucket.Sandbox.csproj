@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Vecc.SmtpBitBucket.Core\Vecc.SmtpBitBucket.Core.csproj" />
     <ProjectReference Include="..\Vecc.SmtpBitBucket.Stores.InMemory\Vecc.SmtpBitBucket.Stores.InMemory.csproj" />
+    <ProjectReference Include="..\Vecc.SmtpBitBucket.Stores.Postgres\Vecc.SmtpBitBucket.Stores.Postgres.csproj" />
   </ItemGroup>
 
 </Project>
