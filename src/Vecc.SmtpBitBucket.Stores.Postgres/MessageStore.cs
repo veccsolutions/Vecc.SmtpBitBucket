@@ -1,9 +1,11 @@
-﻿using System.Text.Json;
+﻿using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Options;
 using Vecc.SmtpBitBucket.Core;
 using Vecc.SmtpBitBucket.Core.Stores;
+using Vecc.SmtpBitBucket.Stores.Postgres.Models;
 
 namespace Vecc.SmtpBitBucket.Stores.Postgres
 {
@@ -28,6 +30,43 @@ namespace Vecc.SmtpBitBucket.Stores.Postgres
                 return null;
             }
         }
+
+        public async Task<MessageSummary[]> GetMessageSummariesAsync(string username)
+        {
+            using (var connection = this.GetConnection())
+            {
+                var query = @"
+SELECT ""Id"",
+    ""SessionId"",
+    ""ClientEhlo"",
+    ""MailFrom"",
+    ""MailTo"",
+    ""Subject"",
+    ""ReceivedAt"",
+    ""Username""";
+
+                if (username != null)
+                {
+                    query += " WHERE \"Username\" = @username";
+                }
+
+                var summaries = await connection.QueryAsync<DataMailMessage>(query, new { username = username });
+                var result = summaries.Select(x => new MessageSummary
+                {
+                    ClientEhlo = x.ClientEhlo,
+                    Id = x.Id,
+                    MailFrom = x.MailFrom,
+                    MailTo = x.MailTo,
+                    ReceiveAt = x.ReceiveAt,
+                    SessionId = x.SessionId,
+                    Subject = x.Subject,
+                    Username = x.Username
+                }).ToArray();
+
+                return result;
+            }
+        }
+
 
         public Task<MailMessage> StoreMessageAsync(MailMessage message)
         {
@@ -56,10 +95,10 @@ RETURNING ""Id"";
                         sessionId = message.SessionId,
                         clientEhlo = message.ClientEhlo,
                         mailFrom = message.MailFrom,
-                        mailTo = string.Join(",", message.Receipients),
+                        mailTo = string.Join(", ", message.Receipients),
                         receivedAt = message.Timestamp,
                         subject = message.Subject,
-                        username = message.Username,
+                        username = message.Username ?? string.Empty,
                         data = data
                     });
 
@@ -91,7 +130,7 @@ WHERE ""Id"" = @id;
                         clientEhlo = message.ClientEhlo,
                         mailFrom = message.MailFrom,
                         receivedAt = message.Timestamp,
-                        username = message.Username,
+                        username = message.Username ?? string.Empty,
                         data = data,
                         id = message.Id
                     });

@@ -1,4 +1,6 @@
-﻿namespace Vecc.SmtpBitBucket.Core
+﻿using System;
+
+namespace Vecc.SmtpBitBucket.Core
 {
     public class MessageSummary
     {
@@ -8,7 +10,7 @@
         public string MailFrom { get; set; }
         public string MailTo { get; set; }
         public string Subject { get; set; }
-        public string ReceiveAt { get; set; }
+        public DateTime ReceiveAt { get; set; }
         public string Username { get; set; }
     }
 }
