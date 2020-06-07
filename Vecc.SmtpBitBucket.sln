@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vecc.SmtpBitBucket.Core", "src\Vecc.SmtpBitBucket.Core\Vecc.SmtpBitBucket.Core.csproj", "{881E33EA-891F-4AB2-92F1-A7644C3408C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vecc.SmtpBitBucket.Site", "src\Vecc.SmtpBitBucket.Site\Vecc.SmtpBitBucket.Site.csproj", "{9A88C357-4AF0-441D-81AF-DF28DC2A51BD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vecc.SmtpBitBucket.Sandbox", "src\Vecc.SmtpBitBucket.Sandbox\Vecc.SmtpBitBucket.Sandbox.csproj", "{103FFDC5-AAB4-4F32-9D71-6507EC48D722}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vecc.SmtpBitBucket.Stores.InMemory", "src\Vecc.SmtpBitBucket.Stores.InMemory\Vecc.SmtpBitBucket.Stores.InMemory.csproj", "{3CA2D682-7FBD-4790-A328-0A7A64986AE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vecc.SmtpBitBucket.Stores.Postgres", "src\Vecc.SmtpBitBucket.Stores.Postgres\Vecc.SmtpBitBucket.Stores.Postgres.csproj", "{5EC7D9A3-2A47-4B13-84C4-F2364A850096}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vecc.SmtpBitBucket.Stores.Postgres", "src\Vecc.SmtpBitBucket.Stores.Postgres\Vecc.SmtpBitBucket.Stores.Postgres.csproj", "{5EC7D9A3-2A47-4B13-84C4-F2364A850096}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vecc.SmtpBitBucket.Site", "src\Vecc.SmtpBitBucket.Site\Vecc.SmtpBitBucket.Site.csproj", "{7B484A2B-BF74-49E8-816C-DB2BFF692762}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{881E33EA-891F-4AB2-92F1-A7644C3408C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{881E33EA-891F-4AB2-92F1-A7644C3408C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{881E33EA-891F-4AB2-92F1-A7644C3408C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A88C357-4AF0-441D-81AF-DF28DC2A51BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A88C357-4AF0-441D-81AF-DF28DC2A51BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A88C357-4AF0-441D-81AF-DF28DC2A51BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A88C357-4AF0-441D-81AF-DF28DC2A51BD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{103FFDC5-AAB4-4F32-9D71-6507EC48D722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{103FFDC5-AAB4-4F32-9D71-6507EC48D722}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{103FFDC5-AAB4-4F32-9D71-6507EC48D722}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{5EC7D9A3-2A47-4B13-84C4-F2364A850096}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EC7D9A3-2A47-4B13-84C4-F2364A850096}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EC7D9A3-2A47-4B13-84C4-F2364A850096}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B484A2B-BF74-49E8-816C-DB2BFF692762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B484A2B-BF74-49E8-816C-DB2BFF692762}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B484A2B-BF74-49E8-816C-DB2BFF692762}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B484A2B-BF74-49E8-816C-DB2BFF692762}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

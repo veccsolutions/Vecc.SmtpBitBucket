@@ -100,7 +100,7 @@ namespace Vecc.SmtpBitBucket.Stores.Postgres
                     predicates.Add("\"SessionStartTime\" <= @newestTime");
                 }
 
-                if (!string.IsNullOrWhiteSpace(username))
+                if (username != null)
                 {
                     predicates.Add("\"Username\" LIKE @username");
                 }

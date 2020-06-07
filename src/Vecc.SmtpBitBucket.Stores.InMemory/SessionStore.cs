@@ -17,6 +17,8 @@ namespace Vecc.SmtpBitBucket.Stores.InMemory
         public SessionStore(IDateTimeProvider dateTimeProvider)
         {
             this._dateTimeProvider = dateTimeProvider;
+            this.InitializeSessions();
+            this.InitializeChatter();
         }
 
         public Task AddChatterAsync(int sessionId, string message, Direction direction)
@@ -79,5 +81,66 @@ namespace Vecc.SmtpBitBucket.Stores.InMemory
             }
         }
 
+        private void InitializeSessions()
+        {
+            var now = this._dateTimeProvider.UtcNow;
+            this._sessions.Add(new SmtpSession
+            {
+                RemoteIp = "1.1.1.1",
+                SessionEndTime = now.AddSeconds(-1),
+                SessionId = 2,
+                SessionStartTime = now.AddSeconds(-1).AddMilliseconds(9),
+                Username = null
+            });
+
+            this._sessions.Add(new SmtpSession
+            {
+                RemoteIp = "127.0.0.1",
+                SessionEndTime = now.AddDays(-8),
+                SessionId = 1,
+                SessionStartTime = now.AddDays(-8).AddSeconds(1),
+                Username = null
+            });
+        }
+
+        private void InitializeChatter()
+        {
+            this.AddChatter(1, "220 Hi", Direction.Out, 0);
+            this.AddChatter(1, "HELO me", Direction.In, 0);
+            this.AddChatter(1, "250 OK", Direction.Out, 0);
+            this.AddChatter(1, "MAIL FROM:<test@test.com>", Direction.In, 0);
+            this.AddChatter(1, "250 OK", Direction.Out, 0);
+            this.AddChatter(1, "RCPT TO:<test1@test1.com>", Direction.In, 0);
+            this.AddChatter(1, "250 OK", Direction.Out, 0);
+            this.AddChatter(1, "DATA", Direction.In, 0);
+            this.AddChatter(1, "354 End data with <CR><LF>.<CR><LF>", Direction.Out, 0);
+            this.AddChatter(1, "From: \"Test\" <test@test.com>", Direction.In, 1);
+            this.AddChatter(1, "To: \"Test1\" <test1@test1.com", Direction.In, 1);
+            this.AddChatter(1, "Subject: Test Message", Direction.In, 1);
+            this.AddChatter(1, "", Direction.In, 1);
+            this.AddChatter(1, "Hello Test", Direction.In, 1);
+            this.AddChatter(1, "This is a test message with 4 header fields and 4 lines in the message body.", Direction.In, 2);
+            this.AddChatter(1, "Your friend,", Direction.In, 3);
+            this.AddChatter(1, "Bob", Direction.In, 4);
+            this.AddChatter(1, ".", Direction.In, 5);
+            this.AddChatter(1, "250 Ok: queued as 12345", Direction.Out, 6);
+            this.AddChatter(1, "QUIT", Direction.In, 7);
+            this.AddChatter(1, "221 Bye", Direction.In, 8);
+        }
+        private Chatter AddChatter(int sessionId, string data, Direction direction, int msOffset)
+        {
+            var result = new Chatter
+            {
+                Data = new SmtpSessionChatter
+                {
+                    Data = data,
+                    Direction = direction,
+                    Timestamp = this._sessions[sessionId - 1].SessionStartTime.Value.AddMilliseconds(msOffset)
+                 },
+                 SessionId = sessionId
+            };
+
+            return result;
+        }
     }
 }
