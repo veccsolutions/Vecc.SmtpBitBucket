@@ -67,8 +67,39 @@ SELECT ""Id"",
             }
         }
 
+        public async Task<MessageSummary[]> GetMessageSummariesBySessionIdAsync(int sessionId)
+        {
+            using (var connection = this.GetConnection())
+            {
+                var query = @"
+SELECT ""Id"",
+    ""SessionId"",
+    ""ClientEhlo"",
+    ""MailFrom"",
+    ""MailTo"",
+    ""Subject"",
+    ""ReceivedAt"",
+    ""Username""
+WHERE ""SessionId"" = @sessionId";
 
-        public Task<MailMessage> StoreMessageAsync(MailMessage message)
+                var summaries = await connection.QueryAsync<DataMailMessage>(query, new { sessionId = sessionId });
+                var result = summaries.Select(x => new MessageSummary
+                {
+                    ClientEhlo = x.ClientEhlo,
+                    Id = x.Id,
+                    MailFrom = x.MailFrom,
+                    MailTo = x.MailTo,
+                    ReceiveAt = x.ReceiveAt,
+                    SessionId = x.SessionId,
+                    Subject = x.Subject,
+                    Username = x.Username
+                }).ToArray();
+
+                return result;
+            }
+        }
+
+            public Task<MailMessage> StoreMessageAsync(MailMessage message)
         {
             if (message.Id != 0)
             {

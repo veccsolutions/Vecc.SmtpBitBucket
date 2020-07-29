@@ -46,7 +46,10 @@ namespace Vecc.SmtpBitBucket.Site
 
             services.AddCoreBitBucket();
             services.Configure<SmtpServerOptions>(this.Configuration.GetSection("SmtpServer"));
-            services.AddSingleton<IModelConverter, ModelConverter>();
+
+            services.AddSingleton<IModelConverter, DefaultModelConverter>();
+            services.AddSingleton<IDataEncryptor, DefaultDataEncryptor>();
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";

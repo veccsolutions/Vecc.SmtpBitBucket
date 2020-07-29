@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { ApplicationState } from '../store';
 import * as SessionsStore from '../store/Sessions';
 import { Session } from 'inspector';
+import * as Models from '../store/models';
 
 // At runtime, Redux will merge together...
 type SessionProps =
@@ -39,9 +40,13 @@ class FetchSession extends React.PureComponent<SessionProps> {
     this.props.requestSessions(startDateIndex);
   }
 
-    private renderSectionsArea(){
-        return (
-                  <table className='table table-striped' aria-labelledby="tabelLabel">
+  private renderSectionsArea() {
+
+    if (this.props.sessions === undefined) {
+      return (<div>Loading</div>);
+    }
+    return (
+      <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
           <tr>
             <th>Start Time</th>
@@ -52,18 +57,20 @@ class FetchSession extends React.PureComponent<SessionProps> {
           </tr>
         </thead>
         <tbody>
-          {this.props.sessions.sessions.map((session: SessionsStore.Session) =>
-            <tr key={session.sessionId}>
-              <td>{session.sessionStartTime}</td>
-              <td>{session.sessionEndTime}</td>
-              <td>{session.username}</td>
-              <td>{session.remoteIp}</td>
-              <td>{session.sessionId}</td>
-            </tr>
-          )}
+          {
+            this.props.sessions.sessions.map((session: Models.SessionSummary) =>
+              <tr key={session.sessionId} data-id={session.sessionId}>
+                <td>{session.sessionStartTime}</td>
+                <td>{session.sessionEndTime}</td>
+                <td>{session.username}</td>
+                <td>{session.remoteIp}</td>
+                <td>{session.id}</td>
+              </tr>
+            )
+          }
         </tbody>
       </table>);
-    }
+  }
 
   private renderPagination() {
     const prevStartDateIndex = (this.props.startDateIndex || 0) - 5;

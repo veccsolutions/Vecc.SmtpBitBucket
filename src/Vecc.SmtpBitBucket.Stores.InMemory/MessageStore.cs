@@ -31,6 +31,25 @@ namespace Vecc.SmtpBitBucket.Stores.InMemory
             return Task.FromResult(summaries);
         }
 
+        public Task<MessageSummary[]> GetMessageSummariesBySessionIdAsync(int sessionId)
+        {
+            var summaries = this._store.Where(x => x.SessionId == sessionId)
+               .Select(x => new MessageSummary
+               {
+                   ClientEhlo = x.ClientEhlo,
+                   Id = x.Id,
+                   MailFrom = x.MailFrom,
+                   MailTo = string.Join(", ", x.Receipients),
+                   ReceiveAt = x.Timestamp,
+                   SessionId = x.SessionId,
+                   Subject = x.Subject,
+                   Username = x.Username
+               })
+               .ToArray();
+
+            return Task.FromResult(summaries);
+        }
+
         public Task<MailMessage> StoreMessageAsync(MailMessage message)
         {
             if (message.Id == 0)

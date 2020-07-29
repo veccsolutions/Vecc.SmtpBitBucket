@@ -6,6 +6,7 @@ namespace Vecc.SmtpBitBucket.Core.Stores
     {
         Task<MailMessage> GetMessageByIdAsync(int id);
         Task<MessageSummary[]> GetMessageSummariesAsync(string username);
+        Task<MessageSummary[]> GetMessageSummariesBySessionIdAsync(int sessionId);
         Task<MailMessage> StoreMessageAsync(MailMessage message);
     }
 }

@@ -2,8 +2,10 @@
 
 namespace Vecc.SmtpBitBucket.Site.Api.V1.Models
 {
-    public class SessionSummary
+    public class SessionDetails
     {
+        public MessageSummaries MessageSummaries { get; set; }
+        public SessionChatter[] SessionChatter { get; set; }
         public string SessionId { get; set; }
         public DateTime? SessionStartTime { get; set; }
         public DateTime? SessionEndTime { get; set; }
