@@ -126,6 +126,29 @@ namespace Vecc.SmtpBitBucket.Stores.InMemory
             this.AddChatter(1, "250 Ok: queued as 12345", Direction.Out, 6);
             this.AddChatter(1, "QUIT", Direction.In, 7);
             this.AddChatter(1, "221 Bye", Direction.In, 8);
+
+
+            this.AddChatter(2, "220 Hi", Direction.Out, 0);
+            this.AddChatter(2, "HELO me", Direction.In, 0);
+            this.AddChatter(2, "250 OK", Direction.Out, 0);
+            this.AddChatter(2, "MAIL FROM:<test@test.com>", Direction.In, 0);
+            this.AddChatter(2, "250 OK", Direction.Out, 0);
+            this.AddChatter(2, "RCPT TO:<test1@test1.com>", Direction.In, 0);
+            this.AddChatter(2, "250 OK", Direction.Out, 0);
+            this.AddChatter(2, "DATA", Direction.In, 0);
+            this.AddChatter(2, "354 End data with <CR><LF>.<CR><LF>", Direction.Out, 0);
+            this.AddChatter(2, "From: \"Test\" <test@test.com>", Direction.In, 1);
+            this.AddChatter(2, "To: \"Test1\" <test1@test1.com", Direction.In, 1);
+            this.AddChatter(2, "Subject: Test Message", Direction.In, 1);
+            this.AddChatter(2, "", Direction.In, 1);
+            this.AddChatter(2, "Hello Test", Direction.In, 1);
+            this.AddChatter(2, "This is a test message with 4 header fields and 4 lines in the message body.", Direction.In, 2);
+            this.AddChatter(2, "Your friend,", Direction.In, 3);
+            this.AddChatter(2, "Bob", Direction.In, 4);
+            this.AddChatter(2, ".", Direction.In, 5);
+            this.AddChatter(2, "250 Ok: queued as 12345", Direction.Out, 6);
+            this.AddChatter(2, "QUIT", Direction.In, 7);
+            this.AddChatter(2, "221 Bye", Direction.In, 8);
         }
         private Chatter AddChatter(int sessionId, string data, Direction direction, int msOffset)
         {
@@ -140,6 +163,7 @@ namespace Vecc.SmtpBitBucket.Stores.InMemory
                  SessionId = sessionId
             };
 
+            this._chatter.Add(result);
             return result;
         }
     }

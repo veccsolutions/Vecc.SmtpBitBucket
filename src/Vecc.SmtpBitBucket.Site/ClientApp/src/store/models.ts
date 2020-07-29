@@ -1,6 +1,7 @@
 export interface MessageSummary {
-    id: string;
+    id: number;
     from: string;
+    messageId: string;
     to: string;
     timeStamp: Date;
     subject: string;
@@ -11,7 +12,7 @@ export interface MessageSummaries {
 }
 
 export interface SessionChatter {
-    direction: string;
+    direction: number;
     data: string;
     timeStamp: Date;
 }
@@ -22,7 +23,7 @@ export interface SessionSummaries {
 
 export interface SessionSummary {
     date: string;
-    id: string;
+    id: number;
     sessionId: string;
     sessionStartTime: Date;
     sessionEndTime: Date;
@@ -31,6 +32,7 @@ export interface SessionSummary {
 }
 
 export interface SessionDetail {
+    id: number;
     messageSummaries: MessageSummaries;
     sessionChatter: SessionChatter[];
     sessionId: string;

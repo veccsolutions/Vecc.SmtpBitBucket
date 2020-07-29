@@ -35,7 +35,7 @@ namespace Vecc.SmtpBitBucket.Site.Api.V1.Services.Internal
                 decrypted = result;
                 return true;
             }
-            catch
+            catch (Exception exception)
             {
                 decrypted = default;
                 return false;
